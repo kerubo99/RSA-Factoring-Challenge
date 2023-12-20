@@ -1,0 +1,70 @@
+#!/usr/bin/python3
+
+import time
+import math
+import sys
+
+def pollard_rho(n):
+    if n % 2 == 0:
+       return 2
+       
+x = 2
+y = 2
+d = 1
+#Define the function f(x) using a lambda function
+f = lambda x: (x**2 + 1) % n
+#Loop until a non-trival factor is found
+while d == 1:
+#Generate new values for x using the function f(x)
+x = f(x)
+
+#Generate new values for y using the function f(f(y))
+y = f(f(y))
+
+#Calculate the greatest common divisor between |x-y| and n
+d = math.gcd(abs(x-),n)
+#Return the non-trivial factor
+return d
+
+def main():
+#check if the correct number of command-line arguments is provided
+if len(sys.argv) != 2:
+#print the correct usage of the program
+print("Usage: python factorize.py <file>")
+#Exit the program if the correct arguments are not provided return
+#Get the file path from the command-line argument
+file_path = sys.argv[1]
+#start timing
+start_time = time.time()
+try:
+#open the file in read mode
+with open(file_path, 'r') as file:
+#Read all lines of the file into a lis
+numbers = file.readlines()
+#iterate through each number in the list
+for number in numbers:
+#convert the string number to an integer
+num = int(number.strip())
+#Factorize the number using Pollard's rho algorithm
+factor = pollard_rho(num)
+# if the factor is equal to the original number
+if factor == num:
+    #print that the number is prime
+     print(f"{num} is prime.")
+    else:
+    #print the factors of the number 
+    print(f"{num} = {factor}*{num // factor}")
+
+    if time.time() - start_time > 5:
+    print("Time limit exceeded")
+    exit()
+    
+    #print an error message if the file is not found
+    except FileNotFoundError:
+    print(f"File '{file_path}' not found.")
+    
+    if _name_ =='_main_':
+    main() #Call the main function when the script is executed
+    
+
+
